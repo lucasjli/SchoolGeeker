@@ -26,28 +26,12 @@ public class SchoolsController : ControllerBase
     }
 
     // Read (GET all)
-   /* [HttpGet]
+    [HttpGet]
     public async Task<IActionResult> GetSchools()
     {
         var schools = await _context.Schools.ToListAsync();
         return Ok(schools);
-    }*/
-
-    [HttpGet]
-    public async Task<IActionResult> GetSchools()
-    {
-        try
-        {
-            var schools = await _context.Schools.ToListAsync();
-            Console.WriteLine("Schools data: " + string.Join(", ", schools.Select(s => s.Name)));
-            return Ok(schools);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
     }
-
 
     // Read (GET by ID)
     [HttpGet("{id}")]

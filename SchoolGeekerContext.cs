@@ -4,6 +4,7 @@ using SchoolGeeker;
 public class SchoolGeekerContext : DbContext
 {
     public DbSet<School> Schools { get; set; }
+    public DbSet<User> Users { get; set; }
 
     public SchoolGeekerContext(DbContextOptions<SchoolGeekerContext> options)
         : base(options)
@@ -29,6 +30,15 @@ public class SchoolGeekerContext : DbContext
             entity.Property(e => e.EnrolmentForm).HasMaxLength(255);
             entity.Property(e => e.SchoolZone).HasMaxLength(200);
             entity.Property(e => e.MoreInfo).HasMaxLength(500);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            entity.Property(e => e.Username).IsRequired().HasMaxLength(50);
+            entity.Property(e => e.Email).IsRequired().HasMaxLength(100);
+            entity.Property(e => e.PasswordHash).IsRequired().HasMaxLength(100);
+            entity.Property(e => e.AvatarURL).HasMaxLength(255);
         });
     }
 }
