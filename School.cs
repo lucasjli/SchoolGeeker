@@ -3,6 +3,7 @@
 namespace SchoolGeeker
 {
     public class School
+    // Some information about the School table can be NULL, so add "?"
     {
         [Key]
         public int ID { get; set; }
@@ -28,7 +29,7 @@ namespace SchoolGeeker
         public string? Email { get; set; }
         [Required]
         public string? EnrolmentInfo { get; set; }
-        public string? EnrolmentForm { get; set; }
+        public string? EnrolmentForm { get; set; }  
         public string? SchoolZone { get; set; }
         public string? MoreInfo { get; set; }
     }
