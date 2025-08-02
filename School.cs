@@ -22,12 +22,9 @@ namespace SchoolGeeker
         [Required]
         public string Introduction { get; set; }
         public string? Logo { get; set; }
-        [Required]
         public string? Telephone { get; set; }
-        [Required]
         [EmailAddress]
         public string? Email { get; set; }
-        [Required]
         public string? EnrolmentInfo { get; set; }
         public string? EnrolmentForm { get; set; }  
         public string? SchoolZone { get; set; }
