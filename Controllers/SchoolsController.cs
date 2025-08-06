@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SchoolGeeker;
+using SchoolGeeker.Models;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -22,7 +22,7 @@ public class SchoolsController : ControllerBase
 
         _context.Schools.Add(school);
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetSchool), new { id = school.ID }, school);
+        return CreatedAtAction(nameof(GetSchool), new { id = school.Id }, school);
     }
 
     // Read (GET all)
@@ -47,7 +47,7 @@ public class SchoolsController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateSchool(int id, [FromBody] School school)
     {
-        if (id != school.ID || !ModelState.IsValid)
+        if (id != school.Id || !ModelState.IsValid)
             return BadRequest();
 
         _context.Entry(school).State = EntityState.Modified;
@@ -79,6 +79,6 @@ public class SchoolsController : ControllerBase
 
     private bool SchoolExists(int id)
     {
-        return _context.Schools.Any(e => e.ID == id);
+        return _context.Schools.Any(e => e.Id == id);
     }
 }

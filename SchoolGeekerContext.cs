@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SchoolGeeker;
+using SchoolGeeker.Models;
 
 public class SchoolGeekerContext : DbContext
 {
     public DbSet<School> Schools { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<SchoolMedia> SchoolMedia { get; set; }
 
     public SchoolGeekerContext(DbContextOptions<SchoolGeekerContext> options)
         : base(options)
@@ -15,7 +16,7 @@ public class SchoolGeekerContext : DbContext
     {
         modelBuilder.Entity<School>(entity =>
         {
-            entity.Property(e => e.ID).ValueGeneratedOnAdd();
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
             entity.Property(e => e.Type).IsRequired().HasMaxLength(50);
             entity.Property(e => e.City).IsRequired().HasMaxLength(50);
@@ -39,6 +40,20 @@ public class SchoolGeekerContext : DbContext
             entity.Property(e => e.Email).IsRequired().HasMaxLength(100);
             entity.Property(e => e.PasswordHash).IsRequired().HasMaxLength(100);
             entity.Property(e => e.AvatarURL).HasMaxLength(255);
+        });
+
+        modelBuilder.Entity<SchoolMedia>(entity =>
+        {
+            entity.Property(e => e.MediaID).ValueGeneratedOnAdd();
+            entity.Property(e => e.SchoolID).IsRequired();
+            entity.Property(e => e.MediaType).IsRequired().HasMaxLength(10);
+            entity.Property(e => e.URL).IsRequired().HasMaxLength(255);
+
+            // One school has many photos and videos
+            entity.HasOne(sm => sm.School)
+                   .WithMany(s => s.SchoolMedia)
+                   .HasForeignKey(sm => sm.SchoolID)
+                   .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

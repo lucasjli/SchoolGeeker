@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SchoolGeeker;
+using SchoolGeeker.Models;
 
 [Route("api/[controller]")]
 [ApiController]

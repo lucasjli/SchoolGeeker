@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SchoolGeeker
+namespace SchoolGeeker.Models
 {
     public class User
     {

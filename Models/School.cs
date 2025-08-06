@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SchoolGeeker
+namespace SchoolGeeker.Models
 {
     public class School
     // Some information about the School table can be NULL, so add "?"
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
@@ -29,5 +29,6 @@ namespace SchoolGeeker
         public string? EnrolmentForm { get; set; }  
         public string? SchoolZone { get; set; }
         public string? MoreInfo { get; set; }
+        public ICollection<SchoolMedia> SchoolMedia { get; set; }
     }
 }
