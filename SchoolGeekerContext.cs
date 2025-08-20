@@ -7,6 +7,7 @@ public class SchoolGeekerContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<SchoolMedia> SchoolMedia { get; set; }
     public DbSet<UserReview> UserReviews { get; set; }
+    public DbSet<UserFavorite> UserFavorites { get; set; }
 
     public SchoolGeekerContext(DbContextOptions<SchoolGeekerContext> options)
         : base(options)
@@ -66,6 +67,15 @@ public class SchoolGeekerContext : DbContext
             entity.Property(e => e.IsLiked).IsRequired();
             entity.Property(e => e.IsApproved).HasDefaultValue(false);
             entity.Property(e => e.DateSubmitted).HasDefaultValueSql("GETDATE()");
+        });
+
+        modelBuilder.Entity<UserFavorite>(entity =>
+        {
+            entity.Property(e => e.ID).ValueGeneratedOnAdd();
+            entity.Property(e => e.UserID).IsRequired();
+            entity.Property(e => e.SchoolID).IsRequired();
+            entity.Property(e => e.DateAdded).HasDefaultValueSql("GETDATE()");
+            entity.HasIndex(e => new { e.UserID, e.SchoolID }).IsUnique();
         });
     }
 }
