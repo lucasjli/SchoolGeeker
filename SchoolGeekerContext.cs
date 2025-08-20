@@ -6,6 +6,7 @@ public class SchoolGeekerContext : DbContext
     public DbSet<School> Schools { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<SchoolMedia> SchoolMedia { get; set; }
+    public DbSet<UserReview> UserReviews { get; set; }
 
     public SchoolGeekerContext(DbContextOptions<SchoolGeekerContext> options)
         : base(options)
@@ -54,6 +55,17 @@ public class SchoolGeekerContext : DbContext
                    .WithMany(s => s.SchoolMedia)
                    .HasForeignKey(sm => sm.SchoolID)
                    .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<UserReview>(entity =>
+        {
+            entity.Property(e => e.ID).ValueGeneratedOnAdd();
+            entity.Property(e => e.UserID).IsRequired();
+            entity.Property(e => e.SchoolID).IsRequired();
+            entity.Property(e => e.Comments).IsRequired().HasMaxLength(500);
+            entity.Property(e => e.IsLiked).IsRequired();
+            entity.Property(e => e.IsApproved).HasDefaultValue(false);
+            entity.Property(e => e.DateSubmitted).HasDefaultValueSql("GETDATE()");
         });
     }
 }
