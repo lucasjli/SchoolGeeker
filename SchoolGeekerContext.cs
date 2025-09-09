@@ -23,8 +23,8 @@ public class SchoolGeekerContext : DbContext
             entity.Property(e => e.Type).IsRequired().HasMaxLength(50);
             entity.Property(e => e.City).IsRequired().HasMaxLength(50);
             entity.Property(e => e.Address).IsRequired().HasMaxLength(200);
-            entity.Property(e => e.Latitude).IsRequired();
-            entity.Property(e => e.Longitude).IsRequired();
+            entity.Property(e => e.mapview);
+            entity.Property(e => e.streetview);
             entity.Property(e => e.Introduction).IsRequired().HasMaxLength(1000);
             entity.Property(e => e.Logo).HasMaxLength(255);
             entity.Property(e => e.Telephone).IsRequired().HasMaxLength(20);

@@ -15,10 +15,8 @@ namespace SchoolGeeker.Models
         public string City { get; set; }
         [Required]
         public string Address { get; set; }
-        [Required]
-        public decimal Latitude { get; set; }
-        [Required]
-        public decimal Longitude { get; set; }
+        public string mapview { get; set; }
+        public string streetview { get; set; }
         [Required]
         public string Introduction { get; set; }
         public string? Logo { get; set; }
