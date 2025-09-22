@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import { UserProvider } from "./components/UserContext";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 
 import './css/schooldetail.css';
 import './css/homepage.css';
@@ -16,14 +16,18 @@ import BackToTop from "./components/BackToTop";
 import UserCenter from "./components/UserCenter";
 
 function App() {
+    // Use a wrapper to conditionally render BackToTop based on route
+    function BackToTopWrapper() {
+        const location = useLocation();
+        // Only show BackToTop when not on homepage
+        return location.pathname !== "/" ? <BackToTop /> : null;
+    }
     return (
         <UserProvider>
             <Router>
                 {/* Global modal component */}
                 <LoginModal />
-                {/* Back to top button */}
-                <BackToTop />
-
+                <BackToTopWrapper />
                 {/* Page routes */}
                 <Routes>
                     <Route path="/" element={<Homepage />} />
