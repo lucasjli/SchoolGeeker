@@ -1,16 +1,16 @@
 #back-to-top {
   position: fixed;
-  /* 固定在视口，不随页面滚动 */
+  /* Fixed in the viewport, does not scroll with the page */
   bottom: 30px;
-  /* 离页面顶部 100px，你可以调节 */
-  right: 13vw;
-  /* 离 school 容器右边 20px，大致靠右 */
+  /* 30px from the bottom of the page, you can adjust */
+  right: 5vw;
+  /* 5vw from the right side of the school container, roughly aligned right */
   width: 30px;
-  /* 图标宽度 */
+  /* Icon width */
   height: 30px;
-  /* 图标高度 */
+  /* Icon height */
   cursor: pointer;
-  /* 鼠标悬停显示小手 */
+  /* Show pointer cursor on hover */
   z-index: 1000;
-  /* 保证在最上层 */
+  /* Ensure it stays on top */
 }
