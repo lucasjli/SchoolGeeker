@@ -9,14 +9,12 @@ namespace SchoolGeeker.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
-        public string Type { get; set; }
-        [Required]
-        public string City { get; set; }
+        public string? Type { get; set; }
+        public string? City { get; set; }
         [Required]
         public string Address { get; set; }
-        public string mapview { get; set; }
-        public string streetview { get; set; }
+        public string? mapview { get; set; }
+        public string? streetview { get; set; }
         [Required]
         public string Introduction { get; set; }
         public string? Logo { get; set; }
@@ -24,7 +22,7 @@ namespace SchoolGeeker.Models
         [EmailAddress]
         public string? Email { get; set; }
         public string? EnrolmentInfo { get; set; }
-        public string? EnrolmentForm { get; set; }  
+        public string? EnrolmentForm { get; set; }
         public string? SchoolZone { get; set; }
         public string? MoreInfo { get; set; }
         public ICollection<SchoolMedia> SchoolMedia { get; set; }
