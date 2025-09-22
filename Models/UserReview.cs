@@ -20,7 +20,8 @@ namespace SchoolGeeker.Models
         [Required]
         public bool IsLiked { get; set; }
 
-        public bool IsApproved { get; set; }
+        [Required]
+        public bool IsDisliked { get; set; }
 
         public DateTime? DateSubmitted { get; set; }
     }
