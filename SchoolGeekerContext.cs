@@ -65,7 +65,7 @@ public class SchoolGeekerContext : DbContext
             entity.Property(e => e.SchoolID).IsRequired();
             entity.Property(e => e.Comments).IsRequired().HasMaxLength(500);
             entity.Property(e => e.IsLiked).IsRequired();
-            entity.Property(e => e.IsApproved).HasDefaultValue(false);
+            entity.Property(e => e.IsDisliked).IsRequired();
             entity.Property(e => e.DateSubmitted).HasDefaultValueSql("GETDATE()");
         });
 
