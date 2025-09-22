@@ -7,6 +7,27 @@ import Breadcrumb from "./Breadcrumb";
 
 function UserCenter() {
   const { user, logout, setUser } = useContext(UserContext);
+
+  // On mount, try to restore user from localStorage, then fetch latest from backend
+  useEffect(() => {
+    const localUser = JSON.parse(localStorage.getItem("user"));
+    if (localUser && localUser.id) {
+      setUser(localUser);
+      fetch(`/api/Users/${localUser.id}`)
+        .then(res => res.json())
+        .then(data => {
+          setUser(data);
+          localStorage.setItem("user", JSON.stringify(data));
+        });
+    }
+  }, []);
+
+  // Whenever user changes, sync to localStorage
+  useEffect(() => {
+    if (user && user.id) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  }, [user]);
   const [openGallery, setOpenGallery] = useState(null);
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [favorites, setFavorites] = useState([]);
@@ -16,12 +37,12 @@ function UserCenter() {
 
   // Fetch real favorited schools and comments data
   useEffect(() => {
-  // Fetch all schools
+    // Fetch all schools
     fetch("/api/Schools")
       .then(res => res.json())
       .then(data => setSchools(data))
       .catch(() => setSchools([]));
-  // Fetch current user's favorited schools
+    // Fetch current user's favorited schools
     if (user?.id) {
       fetch(`/api/UserFavorites/user/${user.id}`)
         .then(res => res.json())
@@ -30,12 +51,12 @@ function UserCenter() {
     } else {
       setFavorites([]);
     }
-  // Fetch comments
+    // Fetch comments
     fetch("/api/UserReviews")
       .then(res => res.json())
       .then(data => setComments(data))
       .catch(() => setComments([]));
-  // Fetch all school media
+    // Fetch all school media
     fetch("/api/SchoolMedias")
       .then(res => res.json())
       .then(data => setMedias(data))
@@ -43,8 +64,17 @@ function UserCenter() {
   }, [user]);
   const [compare, setCompare] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [newUserName, setNewUserName] = useState(user?.username || "");
-  const [newAvatar, setNewAvatar] = useState(user?.avatarURL || "https://objectstorage.ap-sydney-1.oraclecloud.com/n/sd2z6nfhfft4/b/SchoolGeeker/o/default_avatar.jpg");
+  // Always use context's user for avatar and username
+  const [newUserName, setNewUserName] = useState("");
+  const [newAvatar, setNewAvatar] = useState("");
+
+  // Sync modal fields with context user when modal opens or user changes
+  useEffect(() => {
+    if (showModal) {
+      setNewUserName(user?.username || "");
+      setNewAvatar(user?.avatarURL || "https://objectstorage.ap-sydney-1.oraclecloud.com/n/sd2z6nfhfft4/b/SchoolGeeker/o/default_avatar.jpg");
+    }
+  }, [showModal, user]);
 
   // Add/Remove comparison
   const toggleCompare = (school) => {
@@ -92,7 +122,7 @@ function UserCenter() {
       alert("请先登录");
       return;
     }
-  // Ensure email and passwordHash have values
+    // Ensure email and passwordHash have values
     const payload = {
       email: user.email || "",
       passwordHash: user.passwordHash || "",
@@ -108,6 +138,7 @@ function UserCenter() {
       const updatedUser = await res.json();
       if (updatedUser) {
         setUser(updatedUser);
+        localStorage.setItem("user", JSON.stringify(updatedUser));
         setNewUserName(updatedUser.username);
         setNewAvatar(updatedUser.avatarURL);
       }
@@ -141,7 +172,7 @@ function UserCenter() {
     <div>
       <Navbar />
       <div className="container mt-5 pt-3">
-  {/** Breadcrumb navigation **/}
+        {/** Breadcrumb navigation **/}
         <Breadcrumb items={[{ link: "/", icon: "fas fa-home", label: "Home" }, { label: "User Center" }]} />
 
         <div className="card" id='user-center-card'>
@@ -161,11 +192,7 @@ function UserCenter() {
             <div style={{ position: "absolute", right: 0, bottom: 0, display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
               <button className="btn btn-overlay edit-profile-btn"
                 type="button"
-                onClick={() => {
-                  setNewUserName(user?.username || "");
-                  setNewAvatar(user?.avatarURL);
-                  setShowModal(true);
-                }}
+                onClick={() => setShowModal(true)}
               >Edit Profile
               </button>
               <button
@@ -306,41 +333,41 @@ function UserCenter() {
                   <tbody>
 
                     <tr>
-                      <td style={{ textAlign: "center" }}>City</td>
-                      {compare.map(s => <td style={{ textAlign: "center" }} key={s.id}>{s.city}</td>)}
+                      <td style={{ textAlign: "center", verticalAlign: "middle" }}>City</td>
+                      {compare.map(s => <td style={{ textAlign: "center", verticalAlign: "middle" }} key={s.id}>{s.city}</td>)}
                     </tr>
 
                     <tr>
-                      <td style={{ textAlign: "center" }}>Introduction</td>
-                      {compare.map(s => <td key={s.id}>{s.introduction}</td>)}
+                      <td style={{ textAlign: "center", verticalAlign: "middle" }}>Introduction</td>
+                      {compare.map(s => <td style={{ verticalAlign: "middle" }} key={s.id}>{s.introduction}</td>)}
                     </tr>
 
                     <tr>
-                      <td style={{ textAlign: "center" }}>Liked Count</td>
+                      <td style={{ textAlign: "center", verticalAlign: "middle" }}>Liked Count</td>
                       {compare.map(s => {
                         // Count number of reviews in UserReviews table with matching schoolID and isLiked true
                         const likedCount = comments.filter(c => c.schoolID === s.id && c.isLiked === true).length;
-                        return <td style={{ textAlign: "center" }} key={s.id}>{likedCount}</td>;
+                        return <td style={{ textAlign: "center", verticalAlign: "middle" }} key={s.id}>{likedCount}</td>;
                       })}
                     </tr>
 
                     <tr>
-                      <td style={{ textAlign: "center" }}>Disliked Count</td>
+                      <td style={{ textAlign: "center", verticalAlign: "middle" }}>Disliked Count</td>
                       {compare.map(s => {
                         // Count number of reviews in UserReviews table with matching schoolID and isDisliked true
                         const dislikedCount = comments.filter(c => c.schoolID === s.id && c.isDisliked === true).length;
-                        return <td style={{ textAlign: "center" }} key={s.id}>{dislikedCount}</td>;
+                        return <td style={{ textAlign: "center", verticalAlign: "middle" }} key={s.id}>{dislikedCount}</td>;
                       })}
                     </tr>
 
                     <tr>
-                      <td style={{ textAlign: "center" }}>Photo</td>
+                      <td style={{ textAlign: "center", verticalAlign: "middle" }}>Photo</td>
                       {compare.map(s => {
                         const schoolPhotos = medias.filter(
                           m => m.schoolID === s.id && m.mediaType === "Photo" && !m.url.toLowerCase().includes("banner")
                         );
                         return (
-                          <td key={s.id} style={{ textAlign: "center" }}>
+                          <td key={s.id} style={{ textAlign: "center", verticalAlign: "middle" }}>
                             {schoolPhotos.length > 0 && (
                               <div className="ratio ratio-16x9">
                                 <img
@@ -406,14 +433,14 @@ function UserCenter() {
                     })()}
 
                     <tr>
-                      <td style={{ textAlign: "center" }}>Video</td>
+                      <td style={{ textAlign: "center", verticalAlign: "middle" }}>Video</td>
                       {compare.map(s => {
                         const videoMedia = medias.find(
                           media => media.schoolID === s.id && media.mediaType === "Video"
                         );
                         const videoUrl = videoMedia?.url;
                         return (
-                          <td key={s.id} style={{ textAlign: "center" }}>
+                          <td key={s.id} style={{ textAlign: "center", verticalAlign: "middle" }}>
                             {videoUrl ? (
                               <div className="ratio ratio-16x9">
                                 <iframe
@@ -449,7 +476,7 @@ function UserCenter() {
                       </div>
                       <div className="modal-body">
                         <div className="mb-3 text-center">
-                          <img src={newAvatar} alt="新头像" className="user-avatar mb-2" style={{ width: 80, height: 80 }} />
+                          <img src={newAvatar || user?.avatarURL || "https://objectstorage.ap-sydney-1.oraclecloud.com/n/sd2z6nfhfft4/b/SchoolGeeker/o/default_avatar.jpg"} alt="User Avatar" className="user-avatar mb-2" style={{ width: 80, height: 80 }} />
                           <input
                             type="file"
                             accept="image/*"
