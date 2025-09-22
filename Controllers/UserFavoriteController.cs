@@ -42,6 +42,16 @@ public class UserFavoritesController : ControllerBase
         return Ok(userFavorites);
     }
 
+    // READ BY USERID (GET): api/userfavorites/user/{userId}
+    [HttpGet("user/{userId}")]
+    public async Task<IActionResult> GetUserFavoritesByUserId(int userId)
+    {
+        var userFavorites = await _context.UserFavorites
+            .Where(f => f.UserID == userId)
+            .ToListAsync();
+        return Ok(userFavorites);
+    }
+
     // READ BY ID (GET): api/userfavorites/{id}
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserFavorite(int id)

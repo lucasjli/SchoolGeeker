@@ -51,6 +51,26 @@ public class UserReviewsController : ControllerBase
         return Ok(userReview);
     }
 
+    // GET: api/userreviews/user/{userId}
+    [HttpGet("user/{userId}")]
+    public async Task<IActionResult> GetUserReviewsByUserId(int userId)
+    {
+        var userReviews = await _context.UserReviews
+            .Where(r => r.UserID == userId)
+            .ToListAsync();
+        return Ok(userReviews);
+    }
+
+    // GET: api/userreviews/school/{schoolId}
+    [HttpGet("school/{schoolId}")]
+    public async Task<IActionResult> GetUserReviewsBySchoolId(int schoolId)
+    {
+        var userReviews = await _context.UserReviews
+            .Where(r => r.SchoolID == schoolId)
+            .ToListAsync();
+        return Ok(userReviews);
+    }
+
     // UPDATE (PUT): api/userreviews/{id}
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUserReview(int id, [FromBody] UserReview userReview)
@@ -83,6 +103,24 @@ public class UserReviewsController : ControllerBase
     public async Task<IActionResult> DeleteUserReview(int id)
     {
         var userReview = await _context.UserReviews.FindAsync(id);
+
+        if (userReview == null)
+        {
+            return NotFound();
+        }
+
+        _context.UserReviews.Remove(userReview);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    // DELETE: api/userreviews/user/{userId}/{reviewId}
+    [HttpDelete("user/{userId}/{reviewId}")]
+    public async Task<IActionResult> DeleteUserReviewByUser(int userId, int reviewId)
+    {
+        var userReview = await _context.UserReviews
+            .FirstOrDefaultAsync(r => r.ID == reviewId && r.UserID == userId);
 
         if (userReview == null)
         {

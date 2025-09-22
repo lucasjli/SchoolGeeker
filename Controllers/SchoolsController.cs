@@ -27,9 +27,18 @@ public class SchoolsController : ControllerBase
 
     // Read (GET all)
     [HttpGet]
-    public async Task<IActionResult> GetSchools()
+    public async Task<IActionResult> GetSchools([FromQuery] string? type, [FromQuery] string? city)
     {
-        var schools = await _context.Schools.ToListAsync();
+        var query = _context.Schools.AsQueryable();
+        if (!string.IsNullOrEmpty(type))
+        {
+            query = query.Where(s => s.Type == type);
+        }
+        if (!string.IsNullOrEmpty(city))
+        {
+            query = query.Where(s => s.City == city);
+        }
+        var schools = await query.ToListAsync();
         return Ok(schools);
     }
 

@@ -33,7 +33,7 @@ public class SchoolMediasController : ControllerBase
         return Ok(schoolMedias);
     }
 
-    // Read (GET by ID)
+    // Read (GET by MediaID)
     [HttpGet("{id}")]
     public async Task<IActionResult> GetSchoolMedia(int id)
     {
@@ -41,6 +41,16 @@ public class SchoolMediasController : ControllerBase
         if (schoolMedia == null)
             return NotFound();
         return Ok(schoolMedia);
+    }
+
+    // Read (GET by SchoolID)
+    [HttpGet("school/{schoolId}")]
+    public async Task<IActionResult> GetMediasBySchool(int schoolId)
+    {
+        var medias = await _context.SchoolMedia
+            .Where(m => m.SchoolID == schoolId)
+            .ToListAsync();
+        return Ok(medias);
     }
 
     // Update (PUT)
