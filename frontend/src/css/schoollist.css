@@ -1,0 +1,107 @@
+.school-img {
+    display: block;
+    width: 100%;
+    /* 宽度撑满父容器 */
+    height: 300px;
+    border-radius: 24px 24px 0 0;
+    background-size: cover;
+    /* 图片自动铺满容器 */
+    background-position: center;
+    /* 图片居中显示 */
+}
+
+.school .school-text {
+    border-radius: 0 0 24px 24px;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    color: #282828;
+    /* 链接蓝色 */
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+    /* 悬停时显示下划线 */
+}
+
+.school-name a {
+    color: #000;
+    /* 黑色文字 */
+    text-decoration: none;
+    /* 去掉下划线 */
+}
+
+.school-name a:hover {
+    color: #007bff;
+    /* 鼠标悬停时改成蓝色 */
+    text-decoration: underline;
+    /* 悬停时才显示下划线 */
+}
+
+.SchoolCard {
+    padding-top: 10px;
+    /* 所有内容整体下移 */
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    width: 100%;
+    max-width: calc(100% - 6rem);
+    margin-left: 4rem !important;
+    margin-right: 4rem !important;
+}
+
+.save .fas.fa-heart {
+    color: #ff0000;
+    /* 实心心红色 */
+}
+
+.dot {
+    background: gray;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+}
+
+#nav-name {
+    cursor: pointer;
+    font-size: 15px;
+}
+
+#nav-name a:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+#logo {
+    margin-left: 10px;
+}
+
+#WebsiteName {
+    font-weight: bold;
+    font-size: 23px;
+}
+
+#Slogan {
+    font-size: 12px;
+}
+
+.page-header {
+    background-color: #f8f8f8;
+}
+
+#logo {
+    margin-left: 10px;
+    /* 调整 logo 离左边的距离 */
+}
+
+.user-info {
+    margin-right: 10px;
+}
+
+.page-head {
+    margin-top: 65px;
+    /* 确保被导航栏推开 */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}

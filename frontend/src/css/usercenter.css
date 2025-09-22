@@ -1,0 +1,112 @@
+.user-info-overlay {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  padding: 4px 10px;
+}
+
+.user-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+  border: 2px solid rgb(235, 228, 228);
+}
+
+.user-data {
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.UserCenterBG {
+  display: block;
+  width: 100%;
+  /* 宽度撑满父容器 */
+  height: 200px;
+  border-radius: 24px 24px 0 0;
+  background-size: cover;
+  /* 图片自动铺满容器 */
+  background-position: center;
+  /* 图片居中显示 */
+  position: relative;
+}
+
+.bg-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.368);
+  /* 透明度可调 */
+  border-radius: 24px 24px 0 0;
+  pointer-events: none;
+  /* 不影响点击 */
+}
+
+.user-info-overlay .user-name {
+  font-weight: bold;
+  color: #fff;
+  font-size: 2rem;
+}
+
+.user-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#user-center-card {
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.UserCenter-school-item .school-text {
+  color: #fff;
+  position: relative;
+  left: 0px;
+  top: 65%;
+  height: 35%;
+  text-align: left;
+  padding-left: 10px;
+  padding-top: 20px;
+  border-radius: 0 0 24px 24px;
+  background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0) 0, #000 70%);
+}
+
+.UserCenter-school-item {
+  height: 220px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: block;
+  text-decoration: none;
+  border-radius: 24px;
+}
+
+.usercenter-btn.btn {
+  min-width: 100px;
+  height: 30px;
+  font-size: medium;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.edit-profile-btn,
+.logout-btn {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  text-decoration: underline;
+  font-size: 0.875rem;
+  border: none;
+}

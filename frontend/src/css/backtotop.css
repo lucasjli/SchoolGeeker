@@ -1,0 +1,16 @@
+#back-to-top {
+  position: fixed;
+  /* 固定在视口，不随页面滚动 */
+  bottom: 30px;
+  /* 离页面顶部 100px，你可以调节 */
+  right: 13vw;
+  /* 离 school 容器右边 20px，大致靠右 */
+  width: 30px;
+  /* 图标宽度 */
+  height: 30px;
+  /* 图标高度 */
+  cursor: pointer;
+  /* 鼠标悬停显示小手 */
+  z-index: 1000;
+  /* 保证在最上层 */
+}
