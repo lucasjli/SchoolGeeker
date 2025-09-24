@@ -339,7 +339,15 @@ function UserCenter() {
 
                     <tr>
                       <td style={{ textAlign: "center", verticalAlign: "middle" }}>Introduction</td>
-                      {compare.map(s => <td style={{ verticalAlign: "middle" }} key={s.id}>{s.introduction}</td>)}
+                      {compare.map(s => (
+                        <td style={{ verticalAlign: "middle" }} key={s.id}>
+                          {s.introduction
+                            ? s.introduction.split(/\r?\n/).map((line, idx, arr) =>
+                                idx < arr.length - 1 ? <span key={idx}>{line}<br /></span> : <span key={idx}>{line}</span>
+                              )
+                            : null}
+                        </td>
+                      ))}
                     </tr>
 
                     <tr>
