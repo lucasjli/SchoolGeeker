@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.HttpOverrides;
 using SchoolGeeker.Models;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,7 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(
                 "http://schoolgeeker.com",
                 "https://schoolgeeker.com",
-                "http://www.schoolgeeker.com", 
+                "http://www.schoolgeeker.com",
                 "https://www.schoolgeeker.com",
                 "http://localhost:63342"  // 本地开发
               )
@@ -31,6 +32,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();

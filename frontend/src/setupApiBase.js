@@ -36,4 +36,4 @@ if (API_BASE) {
   console.debug('[API] Base URL set to', API_BASE);
 }
 
-export {}; // make this a module
+export { }; // make this a module
