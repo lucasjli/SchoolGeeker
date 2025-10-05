@@ -285,3 +285,17 @@ body:has(.s-smp) header:not(.sticky) .page-header:not(.on) .search button {
 .user-info {
     margin-right: 10px;
 }
+
+.card {
+    margin-bottom: 1em;
+}
+
+.btn-sm span {
+    padding: 6px 6px;
+}
+
+
+.btn-sm {
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
