@@ -19,15 +19,28 @@ function LoginModal() {
 
   React.useEffect(() => {
     if (!isSignUp) {
-      google.accounts.id.initialize({
-        client_id: "1012433519070-n0evss4h4iu3s1js0h99arh5e780596u.apps.googleusercontent.com",
-        callback: handleCredentialResponse,
-      });
-      google.accounts.id.renderButton(document.getElementById("google-login-btn"), {
-        theme: "outline",
-        size: "large",
-        width: "100%"
-      });
+      function initGoogleLogin() {
+        if (window.google && window.google.accounts) {
+          window.google.accounts.id.initialize({
+            client_id: "1012433519070-n0evss4h4iu3s1js0h99arh5e780596u.apps.googleusercontent.com",
+            callback: handleCredentialResponse,
+          });
+          window.google.accounts.id.renderButton(document.getElementById("google-login-btn"), {
+            theme: "outline",
+            size: "large",
+            width: "100%"
+          });
+        }
+      }
+      if (!window.google) {
+        const script = document.createElement('script');
+        script.src = "https://accounts.google.com/gsi/client";
+        script.async = true;
+        script.onload = initGoogleLogin;
+        document.body.appendChild(script);
+      } else {
+        initGoogleLogin();
+      }
     }
   }, [isSignUp]);
 
