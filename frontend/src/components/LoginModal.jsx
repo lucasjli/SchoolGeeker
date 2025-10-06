@@ -62,11 +62,13 @@ function LoginModal() {
         setLoginMsg("Login successful!");
         setTimeout(() => {
           const modalEl = document.getElementById("loginModal");
-          const modal = Modal.getOrCreateInstance(modalEl);
-          modal.hide();
-          const backdrop = document.querySelector(".modal-backdrop");
-          if (backdrop) backdrop.parentNode.removeChild(backdrop);
-        }, 1500);
+          if (modalEl) {
+            const modal = Modal.getOrCreateInstance(modalEl);
+            modal.hide();
+            const backdrop = document.querySelector(".modal-backdrop");
+            if (backdrop) backdrop.parentNode.removeChild(backdrop);
+          }
+        }, 500);
       } else if (res.status === 401) {
         setLoginMsg("Email or password is incorrect!");
       } else {
@@ -104,7 +106,7 @@ function LoginModal() {
           modal.hide();
           const backdrop = document.querySelector(".modal-backdrop");
           if (backdrop) backdrop.parentNode.removeChild(backdrop);
-        }, 1500);
+        }, 500);
       } else {
         setSignUpMsg("Sign up failed!");
       }
@@ -135,7 +137,7 @@ function LoginModal() {
             const backdrop = document.querySelector(".modal-backdrop");
             if (backdrop) backdrop.parentNode.removeChild(backdrop);
           }
-        }, 1500);
+        }, 500);
       } else {
         alert("Google login failed!");
         console.log(await res.text());
